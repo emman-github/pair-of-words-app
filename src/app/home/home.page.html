@@ -1,44 +1,90 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title class="ion-text-center">
-      Tap Word
-    </ion-title>
+    <ion-title>Pair of Words</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
-  <div class="ion-text-center">
-    <h1 class="ion-margin-bottom">{{ text }}</h1>
-    <hr>
-    <div #correctButtonsSection [style.height.px]="shuffledButtonsSectionHeight">
-      <ion-button *ngFor="let button of correctButtons;"
-        color="success"
-        size="large"
-        (click)="showAllDoneAlert()">
-          {{ button.word }}
-      </ion-button>
-    </div>
-    <hr><hr><hr><hr><hr>
-    <div #shuffledButtonsSection>
-      <ion-button *ngFor="let button of shuffledButtons;"
-      (click)="onTapButton(button)"
-      [color]="button.color"
-      [disabled]="button.isDisabled && !button.isDisabledPermanently || button.isDisabledPermanently"
-      size="large">
-       <div *ngIf="button.isDisabledPermanently" style="color: #999;">
-        {{ button.word }}
-       </div>
-       <div *ngIf="!button.isDisabledPermanently">
-       {{ button.word }}
-      </div>
-      </ion-button>
-    </div>
-  </div>
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>About</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      ⚡️ Capacitor plugin for ML Kit Translation.
+    </ion-card-content>
+    <ion-row class="ion-no-padding">
+      <ion-col>
+        <ion-button
+          fill="clear"
+          (click)="openOnGithub()"
+          class="ion-float-right"
+          >GitHub</ion-button
+        >
+      </ion-col>
+    </ion-row>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Translate</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form [formGroup]="translateFormGroup">
+        <ion-item>
+          <ion-label position="fixed">Text</ion-label>
+          <ion-input type="text" formControlName="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="fixed">Source Language</ion-label>
+          <ion-select formControlName="sourceLanguage">
+            <ion-select-option
+              *ngFor="let item of language | keyvalue"
+              [value]="item.value"
+              >{{ item.key }}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label position="fixed">Target Language</ion-label>
+          <ion-select formControlName="targetLanguage">
+            <ion-select-option
+              *ngFor="let item of language | keyvalue"
+              [value]="item.value"
+              >{{ item.key }}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label position="fixed">Translation</ion-label>
+          <ion-input
+            type="text"
+            readonly
+            formControlName="translatedText"
+          ></ion-input>
+        </ion-item>
+      </form>
+      <ion-button (click)="translate()">Translate</ion-button>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Manage Models</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form [formGroup]="manageModelsFormGroup">
+        <ion-item>
+          <ion-label position="fixed">Language</ion-label>
+          <ion-select formControlName="languages" [multiple]="true">
+            <ion-select-option
+              *ngFor="let item of language | keyvalue"
+              [value]="item.value"
+              >{{ item.key }}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+      </form>
+      <ion-button (click)="saveModels()" [disabled]="disableSaveModelsButton"
+        >Save</ion-button
+      >
+    </ion-card-content>
+  </ion-card>
 </ion-content>
-
-<ion-footer>
-  <ion-button (click)="reset()" expand="block" color="primary" size="large">
-    <ion-icon name="refresh"></ion-icon>
-    <span class="ion-margin-start">Reset</span>
-  </ion-button>
-</ion-footer>

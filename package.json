@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^16.0.0",
     "@angular/platform-browser-dynamic": "^16.0.0",
     "@angular/router": "^16.0.0",
+    "@capacitor-mlkit/translation": "^5.1.0",
     "@capacitor/android": "^5.2.3",
     "@capacitor/core": "5.2.3",
     "@ionic/angular": "^6.2.1",
