@@ -1,20 +1,44 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
+    <ion-title class="ion-text-center">
+      Tap Word
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="ion-text-center">
+    <h1 class="ion-margin-bottom">{{ text }}</h1>
+    <hr>
+    <div #correctButtonsSection [style.height.px]="shuffledButtonsSectionHeight">
+      <ion-button *ngFor="let button of correctButtons;"
+        color="success"
+        size="large"
+        (click)="showAllDoneAlert()">
+          {{ button.word }}
+      </ion-button>
+    </div>
+    <hr><hr><hr><hr><hr>
+    <div #shuffledButtonsSection>
+      <ion-button *ngFor="let button of shuffledButtons;"
+      (click)="onTapButton(button)"
+      [color]="button.color"
+      [disabled]="button.isDisabled && !button.isDisabledPermanently || button.isDisabledPermanently"
+      size="large">
+       <div *ngIf="button.isDisabledPermanently" style="color: #999;">
+        {{ button.word }}
+       </div>
+       <div *ngIf="!button.isDisabledPermanently">
+       {{ button.word }}
+      </div>
+      </ion-button>
+    </div>
   </div>
 </ion-content>
+
+<ion-footer>
+  <ion-button (click)="reset()" expand="block" color="primary" size="large">
+    <ion-icon name="refresh"></ion-icon>
+    <span class="ion-margin-start">Reset</span>
+  </ion-button>
+</ion-footer>
