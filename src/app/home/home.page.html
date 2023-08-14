@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Pair of Words</ion-title>
+    <ion-title class="ion-text-center">Pair of Words</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-card>
+<ion-content class="content">
+  <!-- <ion-card>
     <ion-card-header>
       <ion-card-title>About</ion-card-title>
     </ion-card-header>
@@ -86,5 +86,39 @@
         >Save</ion-button
       >
     </ion-card-content>
-  </ion-card>
+  </ion-card> -->
+  <ion-item class="ion-margin">
+    <ion-label>Language</ion-label>
+    <ion-select label="Language" placeholder="Select Language" value="german">
+      <ion-select-option value="german">German</ion-select-option>
+      <ion-select-option value="portuguese">Portuguese</ion-select-option>
+      <ion-select-option value="english">English</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-grid style="position: absolute; top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); width: 100%;">
+    <ion-row *ngFor="let pairOfWord of pairOfWords">
+      <ion-col size="6">
+        <ion-button color="medium" fill="outline" expand="block" size="large">{{ pairOfWord.translated }}</ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button color="medium" fill="outline" expand="block" size="large">{{ pairOfWord.english }}</ion-button>
+      </ion-col>
+    </ion-row>
+    <!-- <ion-row>
+      <ion-col size="6">
+        <ion-button color="success" expand="block" size="large">frau</ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button color="success" expand="block" size="large">woman</ion-button>
+      </ion-col>
+    </ion-row> -->
+  </ion-grid>
 </ion-content>
+
+<ion-footer>
+  <ion-button color="light" expand="block" size="large">
+    <ion-icon name="shuffle-outline" class="ion-margin-end"></ion-icon>Shuffle
+  </ion-button>
+</ion-footer>
